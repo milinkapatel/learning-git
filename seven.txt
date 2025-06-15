@@ -1,0 +1,24 @@
+List<Account> accList = new List<Account>();
+Account acc = new Account(Name = 'Tech scholl 55',phone = '09876');
+Account acc2 = [select Id,name,phone from Account where name = 'Tech school'];
+acc2.phone = '34928';
+accList.add(acc);
+accList.add(acc2);
+upsert(accList);
+
+
+Account masteracc = [select Id,name,phone from Account where name = 'Tech school'];
+Account mergeacc = [select Id,name,phone from Account where name = 'Miintest 6'];
+merge masteracc mergeacc;
+
+
+Account deletedacc = [select Id,name,phone from Account where name = 'Miin test 2' ALL ROWS];
+undelete deletedacc;
+
+try{
+    Account acc = new Account();
+    insert acc;
+}
+catch(DMLException e){
+    System.debug('Error => ' + e.getMessage());
+}
